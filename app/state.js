@@ -333,7 +333,7 @@ App.state.selectedMessage = new O.SingleSelectionController({
             .set( 'prev', index < 0 || !list ? null :
                 list.getObjectAt( prevIndex ) );
     }.queue( 'middle' ).observes( 'index' ),
-}).setSelection().observeList();
+}); //.setSelection().observeList();
 
 App.kbshortcuts = new O.GlobalKeyboardShortcuts();
 App.kbshortcuts
@@ -345,45 +345,45 @@ App.kbshortcuts
     .register( 'cmd-a', App.state.selection, 'selectAll' );
 
 // --- Connect to the push service ---
-
-App.push = new O.EventSource({
-    url: O.bind( JMAP.auth, 'eventSourceUrl' ),
-
-    onStateChange: function ( event ) {
-        var changed, accountId, accountChanges, Type, type;
-        try {
-            changed = JSON.parse( event.data ).changed;
-        } catch ( error ) {
-            O.RunLoop.didError({
-                name: 'JMAP.EventSource#onStateChange',
-                message: 'Invalid JSON',
-                details: 'Arg:\n' + JSON.stringify( event ) + '\n\n',
-            });
-        }
-        if ( !changed ) {
-            return;
-        }
-
-        for ( accountId in changed ) {
-            accountChanges = changed[ accountId ];
-            for ( type in accountChanges ) {
-                if ( type.startsWith( 'Email' ) ) {
-                    type = type.replace( 'Email', 'Message' );
-                }
-                Type = JMAP[ type ];
-                store.sourceStateDidChange(
-                    accountId, Type, accountChanges[ type ] );
-            }
-        }
-    }.on( 'state' ),
-
-    openIfUrl: function () {
-        if ( this.get( 'url' ) ) {
-            this.open();
-        }
-        return this;
-    }.observes( 'url' ),
-}).openIfUrl();
+//
+// App.push = new O.EventSource({
+//     url: O.bind( JMAP.auth, 'eventSourceUrl' ),
+//
+//     onStateChange: function ( event ) {
+//         var changed, accountId, accountChanges, Type, type;
+//         try {
+//             changed = JSON.parse( event.data ).changed;
+//         } catch ( error ) {
+//             O.RunLoop.didError({
+//                 name: 'JMAP.EventSource#onStateChange',
+//                 message: 'Invalid JSON',
+//                 details: 'Arg:\n' + JSON.stringify( event ) + '\n\n',
+//             });
+//         }
+//         if ( !changed ) {
+//             return;
+//         }
+//
+//         for ( accountId in changed ) {
+//             accountChanges = changed[ accountId ];
+//             for ( type in accountChanges ) {
+//                 if ( type.startsWith( 'Email' ) ) {
+//                     type = type.replace( 'Email', 'Message' );
+//                 }
+//                 Type = JMAP[ type ];
+//                 store.sourceStateDidChange(
+//                     accountId, Type, accountChanges[ type ] );
+//             }
+//         }
+//     }.on( 'state' ),
+//
+//     openIfUrl: function () {
+//         if ( this.get( 'url' ) ) {
+//             this.open();
+//         }
+//         return this;
+//     }.observes( 'url' ),
+// }).openIfUrl();
 
 // ---
 
