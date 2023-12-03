@@ -17,7 +17,7 @@ App.views = {
 };
 
 var EmptyView = O.Class({
-    Extends: O.LabelView,
+    Extends: O.TextView,
     layerTag: 'h1',
     className: 'v-Empty',
     positioning: 'absolute',
@@ -167,7 +167,7 @@ var threadView = new O.ScrollView({
                             ( showAgenda ? ' v-Thread--withAgenda' : '' );
                     }),
                     childViews: [
-                        new O.LabelView({
+                        new O.TextView({
                             layerTag: 'h1',
                             className: 'v-Thread-title',
                             value: O.bind( App.state, 'subject' ),
@@ -181,7 +181,7 @@ var threadView = new O.ScrollView({
                         ]).end(),
                     ],
                 }),
-                new O.LabelView({
+                new O.TextView({
                     layerTag: 'h1',
                     className: 'v-Empty',
                     positioning: 'absolute',
@@ -277,9 +277,10 @@ var main = new O.View({
         }),
         new O.View({
             positioning: 'absolute',
-            layout: O.extend({
-                top: 50,
-            }, O.View.LAYOUT_FILL_PARENT, true ),
+            layout: Object.assign({},O.View.LAYOUT_FILL_PARENT,
+                {
+                    top: 50,
+                }),
             childViews: [
                 mailboxView,
                 threadView,
@@ -314,9 +315,10 @@ var sidebar = new O.View({
         new O.ScrollView({
             className: 'v-Sidebar',
             positioning: 'absolute',
-            layout: O.extend({
-                top: 50,
-            }, O.View.LAYOUT_FILL_PARENT, true ),
+            layout: Object.assign({},O.View.LAYOUT_FILL_PARENT,
+                {
+                            top: 50,
+                        }),
             childViews: [
                 new O.ListView({
                     content: App.state.allMailboxes,
@@ -337,19 +339,19 @@ var loginView = new O.View({
                 el( 'h2.v-Login-title', [
                     'JMAP Session URL',
                 ]),
-                new O.TextView({
+                new O.TextInputView({
                     value: O.bindTwoWay( App.credentials, 'server' ),
                 }),
                 el( 'h2.v-Login-title', [
                     'Username',
                 ]),
-                new O.TextView({
+                new O.TextInputView({
                     value: O.bindTwoWay( App.credentials, 'username' ),
                 }),
                 el( 'h2.v-Login-title', [
                     'Password',
                 ]),
-                new O.TextView({
+                new O.TextInputView({
                     value: O.bindTwoWay( App.credentials, 'password' ),
                 }),
                 new O.ButtonView({
