@@ -1,0 +1,73 @@
+{
+  "name": "jmap-demo-webmail",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/JMAPDemo.js",
+  "type": "module",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=4"
+  },
+  "jest": {
+    "transform": {}
+  },
+  "scripts": {
+    "serve": "http-server -p 65432 dist",
+    "prepare": "npm run build",
+    "build": "./build.js",
+    "lint": "npm run lint-eslint && npm run lint-prettier",
+    "lint-eslint": "eslint source",
+    "lint-prettier": "prettier --check source",
+    "fix": "prettier --write source && eslint --fix source",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fastmail/jmap-demo-webmail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fastmail/jmap-demo-webmail/issues"
+  },
+  "dependencies": {
+    "jmap-js": "git+https://github.com/bettamaxx/jmap-js",
+    "dompurify": "^3.0.6"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.3",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-overture": "file:../overture/eslint-plugin-overture",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "http-server": "^14.1.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "eslint-config-airbnb-base",
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "comma-dangle": "off",
+      "no-console": "off",
+      "no-plusplus": "off",
+      "no-bitwise": "off",
+      "no-use-before-define": "warn",
+      "camelcase": "off",
+      "consistent-return": "warn",
+      "no-await-in-loop": "warn"
+    }
+  }
+}
